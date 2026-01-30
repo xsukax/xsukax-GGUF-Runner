@@ -12,6 +12,12 @@ xsukax GGUF Runner is a menu-driven PowerShell application that provides a compl
 
 This application eliminates the complexity of manual llama.cpp setup by providing automated installation, intuitive configuration management, and a polished user experience for both technical and non-technical users who want to run AI models locally on their own hardware.
 
+![](https://raw.githubusercontent.com/xsukax/xsukax-GGUF-Runner/refs/heads/main/ScreenShot1.png)
+
+---
+
+![](https://raw.githubusercontent.com/xsukax/xsukax-GGUF-Runner/refs/heads/main/ScreenShot2.png)
+
 ### Primary Purpose
 
 - **Local AI Deployment**: Run large language models entirely on your local machine without cloud dependencies
