@@ -118,10 +118,11 @@ The application contains no user identification, session tracking, or usage anal
    Ensure the following files are present in the directory:
    - `xsukax-gguf-runner.ps1` - Main PowerShell script
    - `Start.bat` - Convenient launcher batch file
+   - `Start-GPU.bat` - Convenient launcher batch file With GPU Support
 
 3. **Launch the Application**
    
-   Double-click `Start.bat` to launch the application with the correct execution policy.
+   Double-click `Start.bat` or `Start-GPU.bat` to launch the application with the correct execution policy.
    
    **Alternative launch methods:**
    
