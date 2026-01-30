@@ -247,6 +247,7 @@ Deploy an OpenAI-compatible HTTP endpoint:
 - OpenAI Chat Completions API format
 - JSON request/response
 - Integration with tools like LibreChat, SillyTavern, or custom applications
+- You can use this OpenAI WebUI [https://xsukax.github.io/xsukax-Custom-OpenAI-WebUI](https://xsukax.github.io/xsukax-Custom-OpenAI-WebUI)
 
 **Example API request:**
 ```bash
