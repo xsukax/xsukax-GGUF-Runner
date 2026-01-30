@@ -1,299 +1,396 @@
-# xsukax CLI GGUF Runner
+# xsukax GGUF Runner
 
-A complete, menu-driven AI model interface for Windows that simplifies running local GGUF language models with llama.cpp. This tool automatically manages dependencies, provides multiple interaction modes, and prioritizes user privacy through fully offline operation.
+**A Complete, Privacy-Focused AI Model Interface for Windows**
 
-## Project Overview
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Version](https://img.shields.io/badge/version-2.5.0-green.svg)](https://github.com/xsukax/xsukax-GGUF-Runner)
+[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://github.com/xsukax/xsukax-GGUF-Runner)
 
-xsukax CLI GGUF Runner is a PowerShell-based application that provides a user-friendly command-line interface for running GGUF (GPT-Generated Unified Format) language models locally on Windows systems. The application eliminates the complexity of manually configuring llama.cpp by automatically downloading and managing the required binaries, offering an intuitive menu system, and supporting multiple operational modes including interactive chat, single-prompt generation, and OpenAI-compatible API server functionality.
+## 📋 Project Overview
 
-Key capabilities include:
-- **Automatic dependency management** - Downloads and configures llama.cpp (version b7839) without manual intervention
-- **Model agnostic operation** - Works with any GGUF-format model from HuggingFace, TheBloke, Bartowski, and other repositories
-- **Multiple interaction modes** - Interactive chat sessions, one-shot prompt generation, and API server deployment
-- **Persistent configuration** - Saves user preferences including model selection, context size, temperature, GPU settings, and thread allocation
-- **Cross-platform model support** - Compatible with quantized models from Q2 to Q8 precision levels
+xsukax GGUF Runner is a menu-driven PowerShell application that provides a complete interface for running local AI language models in GGUF format on Windows systems. The tool automatically manages the llama.cpp backend, handles model deployment, and offers multiple interaction modes including an interactive console chat, single-shot prompts, API server, and a smooth-streaming GUI client.
 
-## Security and Privacy Benefits
+This application eliminates the complexity of manual llama.cpp setup by providing automated installation, intuitive configuration management, and a polished user experience for both technical and non-technical users who want to run AI models locally on their own hardware.
 
-This application is designed with a privacy-first architecture that ensures complete data sovereignty and security:
+### Primary Purpose
 
-### Local-Only Processing
-All model inference occurs entirely on the user's local machine with zero external network communication during operation. User prompts, model responses, and conversation history never leave the local system, providing absolute privacy protection against data harvesting, surveillance, or unauthorized access.
+- **Local AI Deployment**: Run large language models entirely on your local machine without cloud dependencies
+- **Simplified Management**: Automated llama.cpp installation and model management through an intuitive menu system
+- **Multiple Interaction Modes**: Choose from CLI chat, GUI interface, API server, or single-prompt execution
+- **Hardware Optimization**: Automatic GPU detection with support for both CUDA-accelerated and CPU-only operation
 
-### No Telemetry or Tracking
-The application contains no analytics, telemetry, or tracking mechanisms. No usage statistics, error reports, or behavioral data are collected, transmitted, or stored externally. Users maintain complete anonymity and operational privacy.
+## 🔒 Security and Privacy Benefits
 
-### Dependency Transparency
-The application downloads llama.cpp binaries directly from the official GitHub repository (https://github.com/ggerganov/llama.cpp) using predictable, versioned URLs. All downloads occur over HTTPS with standard system certificate validation. Users can audit network activity and verify that no data exfiltration occurs during setup.
+xsukax GGUF Runner is designed with privacy and security as fundamental principles:
 
-### Isolated Execution Environment
-All application files, configuration data, and model files reside within the installation directory. The application creates only two subdirectories (`llama/` for binaries and `ggufs/` for models) and one configuration file (`gguf-config.json`). No system-wide modifications, registry changes, or hidden files are created.
+### Complete Local Processing
+All AI inference happens entirely on your local machine. Your prompts, conversations, and generated responses never leave your computer, eliminating the risk of data exposure to third-party services, cloud providers, or external APIs.
 
-### Open Source Transparency
-Released under GNU General Public License v3.0, the entire source code is available for security audit and verification. Users can inspect every function, validate data handling practices, and confirm the absence of backdoors or malicious functionality.
+### No External Dependencies
+The application operates in a fully offline mode once the initial llama.cpp binaries are downloaded. No telemetry, analytics, or external network calls are made during normal operation, ensuring complete isolation of your AI interactions.
 
-### Secure Configuration Storage
-User preferences are stored in plain JSON format (`gguf-config.json`) within the application directory. No credentials, API keys, or sensitive information are required or stored. Configuration data includes only benign parameters such as temperature, context size, and model paths.
+### Transparent Source Code
+As an open-source tool licensed under GPL v3.0, every line of code is publicly auditable. Users can verify exactly what the application does, ensuring no hidden data collection, tracking mechanisms, or security vulnerabilities exist in the codebase.
 
-### No Account or Authentication Required
-The application operates completely standalone without requiring user accounts, authentication, or online services. This eliminates risks associated with credential theft, account compromise, or service provider data breaches.
+### Local Data Storage
+Chat histories and configuration files are stored locally in plain JSON format within the application directory. You maintain complete control over your data with the ability to review, backup, or delete conversation histories at any time.
 
-## Features and Advantages
+### Secure Configuration Management
+All settings including model paths, server ports, and inference parameters are stored in local configuration files (`gguf-config.json` and `chat-history.json`). No credentials, API keys, or sensitive information is required to operate the application.
 
-### User Experience
-- **Zero-configuration startup** - Automatic detection and installation of required llama.cpp binaries
-- **Intuitive menu interface** - Color-coded, hierarchical menus with clear status indicators
-- **Model management** - Built-in model selector with validation and persistence
-- **Helpful documentation** - Integrated help screens with quick start guides and troubleshooting tips
+### Network Isolation Options
+When running in interactive or GUI chat modes, the application operates entirely without network connectivity. The optional API server mode runs on localhost by default (port 8080), preventing external network access unless explicitly configured.
 
-### Performance Optimization
-- **GPU acceleration support** - Configurable GPU layer offloading for CUDA-compatible NVIDIA GPUs
-- **Flexible CPU threading** - Adjustable thread count for optimal CPU utilization
-- **Context size control** - Configurable context windows from 512 to 32768+ tokens
-- **Memory efficiency** - Support for highly quantized models (Q4_K_M, Q5_K_M) suitable for resource-constrained systems
+### No User Tracking
+The application contains no user identification, session tracking, or usage analytics. Each execution is independent with no persistent user profiling or behavior monitoring.
 
-### Operational Modes
-- **Interactive chat mode** - Multi-turn conversations with conversation history and context management
-- **Single prompt mode** - One-shot text generation for scripts and automation workflows
-- **API server mode** - OpenAI-compatible HTTP endpoint (port 8080 default) for integration with third-party applications
+## ✨ Features and Advantages
 
-### Advanced Configuration
-- **Temperature control** - Adjustable output randomness from 0.0 (deterministic) to 2.0 (creative)
-- **Token limits** - Configurable maximum generation length (default 2048 tokens)
-- **Model switching** - Quick model selection with automatic configuration persistence
-- **Settings management** - Export/import of configuration with one-click reset to defaults
+### Automatic Backend Management
+- **One-Click llama.cpp Installation**: Automatically downloads and extracts the correct llama.cpp binaries (CUDA or CPU version) based on your hardware
+- **GPU Auto-Detection**: Identifies NVIDIA GPUs and installs CUDA-optimized binaries when available
+- **Version Management**: Maintains llama.cpp version b7839 with option to reinstall or update
+
+### Comprehensive Interaction Modes
+1. **Interactive Chat**: Console-based conversational interface with chat history
+2. **Single Prompt**: Execute one-off queries for quick AI responses
+3. **API Server**: Host a local OpenAI-compatible API endpoint for integration with other tools
+4. **GUI Chat Client**: Windows Forms-based interface with smooth streaming text output
+
+### Advanced Streaming Technology
+- **Smooth Text Rendering**: Win32 API integration for flicker-free, smooth token-by-token streaming
+- **Real-time Response Generation**: See AI output as it's generated, not after completion
+- **Responsive Controls**: Stop generation mid-stream with dedicated stop button
+
+### Flexible Configuration
+- **Context Window Control**: Adjustable from 512 to 131,072 tokens
+- **Temperature Settings**: Fine-tune creativity from 0.0 to 2.0
+- **GPU Layer Configuration**: Choose CPU-only, auto GPU, or specify exact layer offloading
+- **Thread Management**: Auto-detect CPU cores or manually specify thread count
+- **Persistent Settings**: All configurations saved automatically between sessions
+
+### Model Management
+- **GGUF Model Support**: Compatible with all GGUF-format models from HuggingFace
+- **Organized Storage**: Dedicated `ggufs` folder for model organization
+- **Model Selection Memory**: Automatically remembers your last used model
+- **Multiple Model Support**: Switch between different models easily
 
 ### Developer-Friendly
-- **PowerShell scripting** - Extensible PowerShell codebase with modular function architecture
-- **Command-line support** - Help flag (`-Help`) for syntax reference
-- **Error handling** - Comprehensive error detection with user-friendly messages
-- **Portable design** - Self-contained installation with no system dependencies beyond PowerShell 5.1+
+- **OpenAI-Compatible API**: Standard API endpoint for integration with existing tools
+- **JSON Configuration**: Human-readable configuration files for easy customization
+- **Extensible Architecture**: Clean PowerShell code structure for modifications
 
-## Installation Instructions
+### User Experience
+- **Colorful CLI Interface**: Intuitive color-coded menus and status messages
+- **Status Indicators**: Real-time display of selected model, context size, and GPU mode
+- **Error Handling**: Graceful error recovery with informative messages
+- **Progress Feedback**: Clear indicators during downloads and long operations
+
+## 📦 Installation Instructions
 
 ### Prerequisites
-- **Operating System**: Windows 10 or Windows 11 (64-bit)
-- **PowerShell**: Version 5.1 or higher (pre-installed on modern Windows systems)
-- **Disk Space**: Minimum 500MB for llama.cpp binaries, plus storage for GGUF models (2GB-20GB per model depending on size and quantization)
-- **Hardware**: 
-  - CPU: 64-bit processor (Intel/AMD)
-  - RAM: Minimum 8GB (16GB+ recommended for larger models)
-  - GPU: Optional - NVIDIA GPU with CUDA support for GPU acceleration
+
+- **Operating System**: Windows 10 or Windows 11
+- **PowerShell**: Version 5.1 or later (included with Windows)
+- **Storage**: Minimum 500 MB free space (plus space for AI models)
+- **Optional**: NVIDIA GPU with CUDA support for accelerated inference
 
 ### Step-by-Step Installation
 
 1. **Download the Application**
    
-   Clone or download the repository from GitHub:
-   ```bash
-   git clone https://github.com/xsukax/xsukax-CLI-GGUF-Runner.git
-   ```
-   
-   Or download as ZIP and extract to your desired location (e.g., `C:\AI\GGUF-Runner\`)
-
-2. **Verify File Structure**
-   
-   Ensure the following files are present in the installation directory:
-   ```
-   xsukax-CLI-GGUF-Runner/
-   ├── xsukax-gguf-runner.ps1
-   └── Start.bat
+   Clone or download this repository to your local machine:
+   ```powershell
+   git clone https://github.com/xsukax/xsukax-GGUF-Runner.git
+   cd xsukax-GGUF-Runner
    ```
 
-3. **Download GGUF Models**
-   
-   Obtain GGUF models from trusted sources:
-   - HuggingFace: https://huggingface.co/models?library=gguf
-   - TheBloke: https://huggingface.co/TheBloke
-   - Bartowski: https://huggingface.co/bartowski
-   
-   Download `.gguf` files to a temporary location.
+   Alternatively, download the ZIP file from GitHub and extract it to your desired location.
 
-4. **Create Models Directory**
+2. **Verify Files**
    
-   The application will automatically create the `ggufs/` directory on first run, or you can create it manually:
+   Ensure the following files are present in the directory:
+   - `xsukax-gguf-runner.ps1` - Main PowerShell script
+   - `Start.bat` - Convenient launcher batch file
+
+3. **Launch the Application**
+   
+   Double-click `Start.bat` to launch the application with the correct execution policy.
+   
+   **Alternative launch methods:**
+   
+   Via PowerShell directly:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\xsukax-gguf-runner.ps1
    ```
-   xsukax-CLI-GGUF-Runner/
-   ├── ggufs/
-   │   └── (place your .gguf model files here)
-   ├── xsukax-gguf-runner.ps1
-   └── Start.bat
+   
+   From PowerShell console:
+   ```powershell
+   .\xsukax-gguf-runner.ps1
    ```
 
-5. **Place Models**
+4. **First-Run Setup**
    
-   Copy your downloaded `.gguf` model files into the `ggufs/` directory.
+   On first launch, the application will:
+   - Create necessary directories (`llama`, `ggufs`)
+   - Prompt to install llama.cpp binaries automatically
+   - Detect your GPU and download the appropriate version:
+     - **With NVIDIA GPU**: CUDA 12.4 version (~210 MB)
+     - **Without GPU**: CPU-only version (~29 MB)
 
-### First Run
+5. **Download AI Models**
+   
+   Download GGUF models from [HuggingFace](https://huggingface.co/models?library=gguf):
+   - Browse available GGUF models
+   - Download your preferred model (e.g., `llama-2-7b-chat.Q4_K_M.gguf`)
+   - Place the `.gguf` file in the `ggufs` folder within the application directory
 
-Execute the application using one of the following methods:
+6. **Select Your Model**
+   
+   From the main menu:
+   - Press `M` to open the model selector
+   - Choose your downloaded model from the list
+   - The application will remember this selection
 
-**Method 1: Double-click Start.bat** (Recommended for most users)
-- Simply double-click `Start.bat` in Windows Explorer
-- This method automatically bypasses PowerShell execution policy restrictions
+## 🚀 Usage Guide
 
-**Method 2: PowerShell command**
-```powershell
-powershell -ExecutionPolicy Bypass -File .\xsukax-gguf-runner.ps1
+### Application Architecture
+
+```mermaid
+graph TB
+    A[Start.bat] -->|Launches| B[xsukax-gguf-runner.ps1]
+    B -->|Initializes| C[Configuration Manager]
+    B -->|Checks| D[llama.cpp Backend]
+    D -->|Missing| E[Auto-Installer]
+    E -->|Downloads| F[GPU Detection]
+    F -->|CUDA Available| G[CUDA Binaries]
+    F -->|CPU Only| H[CPU Binaries]
+    C -->|Loads| I[gguf-config.json]
+    C -->|Loads| J[chat-history.json]
+    B -->|Presents| K[Main Menu]
+    K -->|Option 1| L[Interactive Chat]
+    K -->|Option 2| M[Single Prompt]
+    K -->|Option 3| N[API Server]
+    K -->|Option 4| O[GUI Chat]
+    L -->|Uses| P[llama-cli.exe]
+    M -->|Uses| P
+    N -->|Uses| Q[llama-server.exe]
+    O -->|Connects to| Q
+    P -->|Loads| R[GGUF Model]
+    Q -->|Loads| R
+    R -->|Stored in| S[ggufs Folder]
 ```
 
-**Method 3: Help command**
-```powershell
-powershell -ExecutionPolicy Bypass -File .\xsukax-gguf-runner.ps1 -Help
+### Workflow Overview
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant StartBat as Start.bat
+    participant Script as PowerShell Script
+    participant Config as Configuration
+    participant Llama as llama.cpp
+    participant Model as GGUF Model
+    
+    User->>StartBat: Double-click
+    StartBat->>Script: Launch with Bypass policy
+    Script->>Config: Load settings
+    Script->>Llama: Check installation
+    alt llama.cpp Missing
+        Script->>Llama: Auto-install
+        Llama-->>Script: Ready
+    end
+    Script->>User: Display Main Menu
+    User->>Script: Select interaction mode
+    Script->>Model: Load selected GGUF
+    Model-->>Script: Model ready
+    Script->>User: Present interface
+    User->>Script: Input prompt
+    Script->>Llama: Process with model
+    Llama-->>Script: Stream tokens
+    Script-->>User: Display response
+    User->>Script: Exit
+    Script->>Config: Save settings
 ```
 
-On first execution:
-1. The application will display the xsukax logo and main menu
-2. Automatically detect if llama.cpp binaries are missing
-3. Prompt for automatic download and installation of llama.cpp (version b7839)
-4. Create `llama/` directory and download required executables (`llama-cli.exe`, `llama-server.exe`)
-5. Display the main menu ready for model selection and usage
+### Main Menu Options
 
-## Usage Guide
+#### 1. Interactive Chat Mode
+Conversational interface with persistent chat history within the session.
 
-### Basic Workflow
+**Usage:**
+1. Select option `1` from the main menu
+2. Type your prompts and press Enter
+3. Receive streaming responses in real-time
+4. Type `exit`, `quit`, or `bye` to return to menu
+
+**Example Session:**
+```
+  >> You: What is the capital of France?
+  
+  Claude: The capital of France is Paris...
+  
+  >> You: Tell me more about it
+  
+  Claude: Paris is located in northern France...
+```
+
+#### 2. Single Prompt Mode
+Execute one-time queries without maintaining conversation context.
+
+**Usage:**
+1. Select option `2` from the main menu
+2. Enter your prompt
+3. Receive the complete response
+4. Automatically return to main menu
+
+**Use Cases:**
+- Quick fact-checking
+- Code snippet generation
+- One-off translations
+- Brief explanations
+
+#### 3. API Server Mode
+Host a local OpenAI-compatible API server for integration with other applications.
+
+**Usage:**
+1. Select option `3` from the main menu
+2. Server starts on configured port (default: 8080)
+3. Access via HTTP at `http://localhost:8080`
+4. Press any key to stop the server
+
+**API Endpoint:**
+```bash
+POST http://localhost:8080/v1/chat/completions
+Content-Type: application/json
+
+{
+  "messages": [
+    {"role": "user", "content": "Hello!"}
+  ],
+  "temperature": 0.8,
+  "max_tokens": 2048
+}
+```
+
+**Compatible Tools:**
+- Open WebUI
+- LibreChat
+- Any OpenAI API-compatible client
+
+#### 4. GUI Chat Mode
+Windows Forms-based interface with smooth streaming and conversation management.
+
+**Features:**
+- **Conversation List**: Left panel shows all chat sessions
+- **Chat Display**: Center panel with smooth token streaming
+- **Input Area**: Bottom text box for multi-line prompts
+- **Controls**: Send button and Stop button for generation control
+- **Context Menu**: Right-click to copy text selections
+
+**Keyboard Shortcuts:**
+- `Enter`: Send message
+- `Shift+Enter`: New line in input
+
+### Configuration Management
+
+Access the Settings menu by pressing `S` from the main menu.
+
+**Available Settings:**
+
+| Setting | Range | Description |
+|---------|-------|-------------|
+| Context Size | 512 - 131,072 | Maximum tokens the model can consider |
+| Temperature | 0.0 - 2.0 | Controls randomness (lower = focused) |
+| Max Tokens | 1 - 32,768 | Maximum tokens in generated response |
+| GPU Layers | -1, 0, 1+ | GPU offloading (-1=auto, 0=CPU, N=layers) |
+| Server Port | 1024 - 65,535 | API server listening port |
+| CPU Threads | 0+ | Processing threads (0=auto-detect) |
+
+**GPU Configuration Guide:**
+- `0`: CPU-only processing (slowest, works on all systems)
+- `-1`: Automatic GPU detection and layer offloading (recommended)
+- `33`: Offload 33 layers to GPU (manual tuning for performance)
+
+### Tools Menu
+
+Press `T` from the main menu to access system tools.
+
+**Available Tools:**
+1. **Reinstall llama.cpp**: Download and install fresh llama.cpp binaries
+2. **Open Models Folder**: Quick access to `ggufs` directory for adding models
+3. **Open llama Folder**: View llama.cpp installation and binaries
+
+### Model Selection Workflow
 
 ```mermaid
 flowchart TD
-    A[Start Application] --> B{llama.cpp<br/>Installed?}
-    B -->|No| C[Auto-download<br/>llama.cpp]
-    C --> D[Main Menu]
-    B -->|Yes| D
-    D --> E{Action?}
-    E -->|Select Model| F[Model Selector]
-    F --> G[Choose GGUF File]
-    G --> H[Save as Default]
-    H --> D
-    E -->|Interactive Chat| I{Model<br/>Selected?}
-    I -->|No| F
-    I -->|Yes| J[Launch Chat Session]
-    J --> K[Type Messages]
-    K --> L[Receive Responses]
-    L --> M{Continue?}
-    M -->|Yes| K
-    M -->|No| D
-    E -->|Single Prompt| N{Model<br/>Selected?}
-    N -->|No| F
-    N -->|Yes| O[Enter Prompt]
-    O --> P[Generate Response]
-    P --> D
-    E -->|API Server| Q{Model<br/>Selected?}
-    Q -->|No| F
-    Q -->|Yes| R[Start Server<br/>Port 8080]
-    R --> S[Accept API Requests]
-    S --> T{Stop Server?}
-    T -->|No| S
-    T -->|Yes| D
-    E -->|Settings| U[Configure Parameters]
-    U --> V[Save Settings]
-    V --> D
-    E -->|Tools| W[System Info/<br/>Reinstall/<br/>Links]
-    W --> D
-    E -->|Quit| X[Exit Application]
+    A[Press M for Model Selection] --> B{Models in ggufs folder?}
+    B -->|Yes| C[Display Model List]
+    B -->|No| D[Show Empty Message]
+    D --> E[Open ggufs Folder]
+    E --> F[User Downloads Model]
+    F --> G[Place in ggufs]
+    G --> C
+    C --> H[User Selects Model]
+    H --> I[Update LastModel Config]
+    I --> J[Save Configuration]
+    J --> K[Return to Main Menu]
+    K --> L[Model Ready for Use]
 ```
 
-### Interactive Chat Mode
+### Common Workflows
 
-Launch a multi-turn conversation session:
+**Workflow 1: First-Time Setup and Chat**
+1. Launch `Start.bat`
+2. Application auto-installs llama.cpp
+3. Download a GGUF model to `ggufs` folder
+4. Press `M` and select your model
+5. Press `4` for GUI Chat
+6. Start conversing!
 
-1. From the Main Menu, select option **1** (Interactive Chat)
-2. If no model is selected, the Model Selector will appear
-3. Choose a model by entering its corresponding number
-4. The chat interface will launch with the selected model
-5. Type your messages and press Enter to receive responses
-6. Type `exit`, `quit`, or press Ctrl+C to end the session and return to the main menu
+**Workflow 2: Running Local API Server**
+1. Press `M` and select your model
+2. Press `S` to configure server port (if needed)
+3. Press `3` to start API server
+4. Connect your preferred client to `http://localhost:8080`
+5. Send requests via OpenAI-compatible API
 
-**Example interaction:**
-```
-You: What is the capital of France?
-Assistant: The capital of France is Paris.
+**Workflow 3: Quick Information Retrieval**
+1. Press `2` for Single Prompt mode
+2. Enter your question
+3. Get immediate answer
+4. Repeat or return to menu
 
-You: Tell me three interesting facts about it.
-Assistant: Here are three interesting facts about Paris:
-1. The Eiffel Tower was originally intended to be temporary...
-2. Paris has over 130 museums...
-3. The city's metro system is one of the oldest in the world...
+### Advanced Usage Tips
 
-You: exit
-[Returns to Main Menu]
-```
+**Optimizing Performance:**
+- For faster inference, use quantized models (Q4_K_M, Q5_K_M)
+- Enable GPU layers if you have NVIDIA GPU
+- Reduce context size for faster response times
+- Increase threads on multi-core CPUs
 
-### Single Prompt Mode
+**Managing Chat History:**
+- GUI mode saves conversations in `chat-history.json`
+- Manually edit or delete this file to manage history
+- Each conversation has a unique ID and timestamp
 
-Execute one-shot text generation:
+**Troubleshooting:**
+- If model fails to load, check file integrity
+- Verify sufficient RAM for model size
+- Ensure llama.cpp binaries match your system architecture
+- Check Windows Firewall if API server is inaccessible
 
-1. From the Main Menu, select option **2** (Single Prompt)
-2. Select a model if not already chosen
-3. Enter your prompt when requested
-4. The model generates a response
-5. Automatically returns to the main menu after completion
+## 📄 Licensing Information
 
-**Use cases:**
-- Script automation
-- Batch text generation
-- Quick answers without conversation context
+This project is licensed under the GNU General Public License v3.0.
 
-### API Server Mode
+## 🛠️ Configuration Files
 
-Deploy an OpenAI-compatible HTTP endpoint:
+The application manages two JSON configuration files automatically:
 
-1. From the Main Menu, select option **3** (API Server)
-2. Select a model if not already chosen
-3. The server starts on port 8080 (configurable in Settings)
-4. Access the API at `http://localhost:8080/v1/chat/completions`
-5. Press any key to stop the server and return to the main menu
-
-**API compatibility:**
-- OpenAI Chat Completions API format
-- JSON request/response
-- Integration with tools like LibreChat, SillyTavern, or custom applications
-- You can use this OpenAI WebUI [https://xsukax.github.io/xsukax-Custom-OpenAI-WebUI](https://xsukax.github.io/xsukax-Custom-OpenAI-WebUI)
-
-**Example API request:**
-```bash
-curl http://localhost:8080/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "messages": [{"role": "user", "content": "Hello!"}],
-    "temperature": 0.8
-  }'
-```
-
-### Model Selection
-
-Manage GGUF models:
-
-1. From the Main Menu, select **M** (Select Model)
-2. The application scans the `ggufs/` directory
-3. Available models are displayed with index numbers
-4. Enter the number corresponding to your desired model
-5. The selected model becomes the default for all modes
-
-**Model selector output example:**
-```
-Available Models:
-  [1] llama-2-7b-chat.Q4_K_M.gguf (3.5 GB)
-  [2] mistral-7b-instruct-v0.2.Q5_K_M.gguf (4.8 GB)
-  [3] phi-3-mini-4k-instruct.Q4_K_M.gguf (2.3 GB)
-```
-
-### Settings Configuration
-
-Customize operational parameters:
-
-1. From the Main Menu, select **S** (Settings)
-2. Choose a setting category:
-   - **1** - Temperature (0.0-2.0, default 0.8)
-   - **2** - Context Size (512-32768, default 4096)
-   - **3** - Max Tokens (100-8192, default 2048)
-   - **4** - GPU Layers (0=CPU, -1=Auto, N=Specific count)
-   - **5** - Server Port (1024-65535, default 8080)
-   - **6** - CPU Threads (0=Auto, N=Specific count)
-   - **R** - Reset all settings to defaults
-3. Enter new values when prompted
-4. Settings are saved automatically to `gguf-config.json`
-
-**Configuration file structure (gguf-config.json):**
+### gguf-config.json
+Stores application settings and user preferences:
 ```json
 {
   "Temperature": 0.8,
@@ -302,187 +399,52 @@ Customize operational parameters:
   "GpuLayers": 0,
   "ServerPort": 8080,
   "Threads": 0,
-  "LastModel": "C:\\AI\\GGUF-Runner\\ggufs\\llama-2-7b.gguf"
+  "LastModel": "C:\\path\\to\\model.gguf"
 }
 ```
 
-### Tools and Information
-
-Access system utilities:
-
-1. From the Main Menu, select **T** (Tools and Info)
-2. View system status (llama-cli, llama-server, model count)
-3. Available tools:
-   - **1** - Reinstall llama.cpp (redownload binaries)
-   - **2** - Open models folder in Windows Explorer
-   - **3** - Open llama folder in Windows Explorer
-   - **4** - Display model download source links
-
-### Performance Optimization
-
-#### GPU Acceleration (NVIDIA GPUs with CUDA)
-
-Enable GPU acceleration for faster inference:
-
-1. Navigate to Settings → GPU Layers
-2. Configuration options:
-   - `0` - CPU only (default, maximum compatibility)
-   - `-1` - Auto (offload all layers to GPU, recommended for CUDA GPUs)
-   - `N` - Specific layer count (e.g., `20` offloads 20 layers to GPU)
-3. Save settings and restart model inference
-
-**GPU acceleration workflow:**
-
-```mermaid
-flowchart LR
-    A[Configure GPU Layers] --> B{GPU Setting}
-    B -->|0| C[CPU Only]
-    B -->|-1| D[Auto Offload]
-    B -->|N| E[Partial Offload]
-    C --> F[Slower Inference<br/>Lower VRAM Usage]
-    D --> G[Fastest Inference<br/>High VRAM Usage]
-    E --> H[Balanced Performance]
-    F --> I[Compatible with All Systems]
-    G --> J[Requires CUDA GPU]
-    H --> J
+### chat-history.json
+Maintains conversation history for the GUI chat interface:
+```json
+{
+  "conversations": [
+    {
+      "id": "conv_20250130_123456",
+      "created": "2025-01-30T12:34:56",
+      "messages": [
+        {"role": "user", "content": "Hello"},
+        {"role": "assistant", "content": "Hi! How can I help?"}
+      ]
+    }
+  ]
+}
 ```
 
-#### Low Memory Systems
+Both files are created automatically on first run and updated as you use the application.
 
-Optimize for systems with limited RAM:
+## 🔗 Useful Resources
 
-1. **Use smaller quantizations**: Q4_K_M or Q3_K_M models
-2. **Reduce context size**: Set to 2048 or lower in Settings
-3. **Choose smaller models**: 1B-3B parameter models (e.g., Phi-2, Qwen-1.8B)
-4. **Close background applications**: Maximize available system RAM
-5. **Disable GPU offloading**: Set GPU layers to 0 to avoid VRAM allocation
+- **GGUF Models**: [HuggingFace GGUF Collection](https://huggingface.co/models?library=gguf)
+- **llama.cpp Project**: [GitHub Repository](https://github.com/ggml-org/llama.cpp)
+- **Model Recommendations**:
+  - Llama 2 7B Chat (Q4_K_M): Great balance of quality and speed
+  - Mistral 7B Instruct (Q5_K_M): Excellent instruction following
+  - Phi-3 Mini (Q4_K_M): Fast and efficient for general tasks
 
-**Memory usage estimates:**
-- 7B Q4_K_M model, 4096 context: ~6GB RAM
-- 7B Q4_K_M model, 2048 context: ~4GB RAM
-- 3B Q4_K_M model, 2048 context: ~2.5GB RAM
+## 🤝 Contributing
 
-### Application Architecture
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/xsukax/xsukax-GGUF-Runner/issues).
 
-```mermaid
-flowchart TB
-    subgraph User Interface
-        A[Start.bat] --> B[xsukax-gguf-runner.ps1]
-        B --> C[Menu System]
-    end
-    
-    subgraph Configuration
-        D[gguf-config.json] <--> B
-        E[Load/Save Settings] --> D
-    end
-    
-    subgraph Core Functions
-        C --> F[Model Selector]
-        C --> G[Interactive Mode]
-        C --> H[Single Prompt Mode]
-        C --> I[Server Mode]
-        C --> J[Settings Manager]
-        C --> K[Tools Menu]
-    end
-    
-    subgraph Dependencies
-        L[llama.cpp Downloader] --> M[llama/ directory]
-        M --> N[llama-cli.exe]
-        M --> O[llama-server.exe]
-    end
-    
-    subgraph Model Storage
-        P[ggufs/ directory] --> Q[User Models]
-        F --> Q
-    end
-    
-    G --> N
-    H --> N
-    I --> O
-    B --> L
-```
+## 👤 Author
 
-### Command-Line Reference
+**xsukax**
+- GitHub: [@xsukax](https://github.com/xsukax)
 
-For script automation and advanced usage:
+## 📝 Version History
 
-```powershell
-# Display help information
-powershell -ExecutionPolicy Bypass -File .\xsukax-gguf-runner.ps1 -Help
-
-# Standard interactive launch
-powershell -ExecutionPolicy Bypass -File .\xsukax-gguf-runner.ps1
-
-# Launch via batch file (bypasses execution policy automatically)
-Start.bat
-```
-
-### Troubleshooting
-
-**Problem**: "llama-cli.exe not found" error
-
-**Solution**: Select option **1** from the Tools menu to reinstall llama.cpp binaries
+- **v2.5.0** - Smooth Streaming: Enhanced GUI with Win32 API integration for flicker-free text rendering
+- Current stable version with full feature set
 
 ---
 
-**Problem**: Model fails to load with "out of memory" error
-
-**Solution**: 
-- Reduce context size in Settings (try 2048 or 1024)
-- Use a smaller quantized model (Q4_K_M or Q3_K_M)
-- Close memory-intensive applications
-
----
-
-**Problem**: GPU acceleration not working
-
-**Solution**:
-- Verify NVIDIA GPU with CUDA support is installed
-- Ensure CUDA drivers are up to date
-- Try setting GPU layers to `-1` for auto-detection
-- If issues persist, set GPU layers to `0` for CPU-only mode
-
----
-
-**Problem**: Server mode port already in use
-
-**Solution**:
-- Change Server Port in Settings to an unused port (e.g., 8081, 8090)
-- Close applications using port 8080
-- Check for running instances of llama-server.exe in Task Manager
-
----
-
-**Problem**: Models not appearing in selector
-
-**Solution**:
-- Verify `.gguf` files are placed in the `ggufs/` directory
-- Check file extensions are exactly `.gguf` (not `.gguf.txt` or similar)
-- Restart the application to refresh model detection
-
-## Licensing Information
-
-This project is licensed under the GNU General Public License v3.0.
-
----
-
-## Additional Resources
-
-**Model Repositories:**
-- HuggingFace GGUF Models: https://huggingface.co/models?library=gguf
-- TheBloke Quantized Models: https://huggingface.co/TheBloke
-- Bartowski Models: https://huggingface.co/bartowski
-
-**llama.cpp Documentation:**
-- Official Repository: https://github.com/ggerganov/llama.cpp
-- Quantization Guide: https://github.com/ggerganov/llama.cpp/blob/master/examples/quantize/README.md
-
-**Community Support:**
-- GitHub Issues: https://github.com/xsukax/xsukax-CLI-GGUF-Runner/issues
-- llama.cpp Discord: https://discord.gg/llama-cpp
-
----
-
-**Version**: 2.0.0  
-**Author**: xsukax  
-**Repository**: https://github.com/xsukax/xsukax-CLI-GGUF-Runner
+**Note**: This application requires administrative privileges only during initial llama.cpp download. Normal operation runs with standard user permissions. For security-conscious users, you can review all network connections in the PowerShell script source code before first run.
